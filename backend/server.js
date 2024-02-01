@@ -1,12 +1,24 @@
 require("dotenv").config();
+
 const express = require("express");
+const sequelize = require("./config/db");
+
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
-app.get("/", (_, res) => {
-  res.send("Hello World!");
-});
+sequelize
+  .sync()
+  .then(() => {
+    console.log("Database synchronized");
+  })
+  .catch((error) => {
+    console.error("Error synchronizing database:", error);
+  });
 
-app.listen(3000, () => {
-  console.log("Running app on port 3000");
+app.use("/api", userRoutes);
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Running app on port ${port}`);
 });
