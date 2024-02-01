@@ -1,7 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
+const Chapter = require("./Chapter");
 
-const User = sequelize.define("User", {
+const User = sequelize.define("user", {
   user_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -21,5 +22,7 @@ const User = sequelize.define("User", {
     allowNull: false,
   },
 });
+
+User.hasMany(Chapter, { foreignKey: "user_id" });
 
 module.exports = User;

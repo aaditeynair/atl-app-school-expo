@@ -4,6 +4,7 @@ const express = require("express");
 const sequelize = require("./config/db");
 
 const userRoutes = require("./routes/userRoutes");
+const chapterRoutes = require("./routes/chapterRoutes");
 
 const app = express();
 
@@ -17,6 +18,7 @@ sequelize
   });
 
 app.use("/api", userRoutes);
+app.use("/api", chapterRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
