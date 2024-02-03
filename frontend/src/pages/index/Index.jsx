@@ -1,5 +1,5 @@
 import { CssBaseline } from "@mui/material";
-import "./App.css";
+import "../../styles/main.css";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
             <p className="mt-1">What are we learning today?</p>
           </div>
           <div className="">
-            <a href="/signup">Sign Up</a>
+            <a href="/signup/">Sign Up</a>
           </div>
         </div>
 

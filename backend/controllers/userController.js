@@ -5,6 +5,7 @@ const UserController = {
   createUser: async (req, res) => {
     const { username, email, password } = req.query;
 
+    console.log(username, email, password);
     bcrypt
       .hash(password, 10)
       .then((hashedPassword) => {
