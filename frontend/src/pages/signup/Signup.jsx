@@ -8,14 +8,17 @@ import {
   InputAdornment,
   IconButton,
   Button,
+  Alert,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import "../../styles/main.css";
 import axios from "axios";
+import { CheckCircleOutline } from "@mui/icons-material";
 
-function Login() {
+function Signup() {
   const [showPassword, setShowPassword] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -38,14 +41,21 @@ function Login() {
           password,
         },
       })
+      .then((res) => {
+        if (res.status === 201) {
+          window.location.href = "/";
+        }
+      })
       .catch((e) => {
-        console.log(e);
+        if (e.response.status === 401) {
+          setShowError(true);
+        }
       });
   };
   return (
     <>
       <CssBaseline />
-      <div className="m-12 text-center">
+      <div className="m-12 mt-24 text-center">
         <h1 className="font-bold text-5xl">Sign Up</h1>
         <form className="w-1/3 mx-auto mt-8 space-y-4" onSubmit={handleSubmit}>
           <TextField
@@ -89,9 +99,18 @@ function Login() {
             Create Account
           </Button>
         </form>
+        {showError && (
+          <Alert
+            className="w-1/3 mx-auto mt-8"
+            severity="error"
+            variant="filled"
+          >
+            Email address already in use
+          </Alert>
+        )}
       </div>
     </>
   );
 }
 
-export default Login;
+export default Signup;
