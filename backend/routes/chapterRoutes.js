@@ -7,4 +7,8 @@ router.post("/chapters", (req, res) => {
   ChapterController.createChapter(req, res);
 });
 
+router.get("/chapters/:userId", (req, res) => {
+  ChapterController.getAllUserChapter(req, res);
+});
+
 module.exports = router;
