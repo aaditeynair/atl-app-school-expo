@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  CssBaseline,
   TextField,
   FormControl,
   InputLabel,
@@ -12,12 +11,17 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import "../../styles/main.css";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "../redux/userSlice";
 
-function Signup() {
+function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -28,43 +32,32 @@ function Signup() {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
 
-    const name = data.get("name");
     const email = data.get("email");
     const password = data.get("password");
 
     axios
-      .post("http://localhost:3000/api/users/", null, {
+      .post("http://localhost:3000/api/login/", null, {
         params: {
-          username: name,
           email,
           password,
         },
       })
       .then((res) => {
-        if (res.status === 201) {
-          window.location.href = "/";
-        }
+        const { user, token } = res.data;
+
+        localStorage.setItem("token", token);
+        dispatch(setUser(user));
+        navigate("/");
       })
       .catch((e) => {
-        if (e.response.status === 401) {
-          setShowError(true);
-        }
+        console.log(e);
       });
   };
   return (
     <>
-      <CssBaseline />
       <div className="m-12 mt-24 text-center">
-        <h1 className="font-bold text-5xl">Sign Up</h1>
+        <h1 className="font-bold text-5xl">Login</h1>
         <form className="w-1/3 mx-auto mt-8 space-y-4" onSubmit={handleSubmit}>
-          <TextField
-            autoComplete="given-name"
-            required
-            fullWidth
-            name="name"
-            label="Your Name"
-            autoFocus
-          />
           <TextField
             autoComplete="email"
             required
@@ -112,4 +105,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Login;
