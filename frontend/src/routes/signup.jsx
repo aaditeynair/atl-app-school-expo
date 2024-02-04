@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  CssBaseline,
   TextField,
   FormControl,
   InputLabel,
@@ -12,6 +11,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 function Signup() {
@@ -91,6 +91,9 @@ function Signup() {
             label="Password"
           />
         </FormControl>
+        <Link to="/login" className="text-right text-blue-600 block pb-4">
+          Already have an account? Login
+        </Link>
         <Button type="submit" variant="outlined">
           Create Account
         </Button>

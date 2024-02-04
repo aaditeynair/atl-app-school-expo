@@ -13,7 +13,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { setUser } from "../redux/userSlice";
 
 function Login() {
@@ -87,8 +87,11 @@ function Login() {
               label="Password"
             />
           </FormControl>
+          <Link to="/signup" className="text-right text-blue-600 block pb-4">
+            Don&apos;t have an account? Sign Up
+          </Link>
           <Button type="submit" variant="outlined">
-            Create Account
+            Login
           </Button>
         </form>
         {showError && (

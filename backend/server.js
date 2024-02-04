@@ -7,6 +7,7 @@ const userRoutes = require("./routes/userRoutes");
 const chapterRoutes = require("./routes/chapterRoutes");
 const sessionRoutes = require("./routes/sessionRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use("/api", userRoutes);
 app.use("/api", chapterRoutes);
 app.use("/api", sessionRoutes);
 app.use("/api", taskRoutes);
+app.use("/api", authRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
