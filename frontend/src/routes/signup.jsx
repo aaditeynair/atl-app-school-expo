@@ -18,7 +18,7 @@ import axios from "axios";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
-  const [showError, setShowError] = useState(false);
+  const [error, setError] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,6 +35,12 @@ function Signup() {
     const name = data.get("name");
     const email = data.get("email");
     const password = data.get("password");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
 
     axios
       .post("http://localhost:3000/api/users/", null, {
@@ -54,14 +60,19 @@ function Signup() {
         }
       })
       .catch((e) => {
-        if (e.response.status === 401) {
-          setShowError(true);
+        if (e.response.data.error === "Email already in use") {
+          setError("Email account already in use");
         }
       });
   };
   return (
     <div className="mt-24 text-center">
       <h1 className="font-bold text-5xl">Sign Up</h1>
+      {error && (
+        <Alert className="w-1/3 mx-auto mt-8" severity="error" variant="filled">
+          {error}
+        </Alert>
+      )}
       <form className="w-1/3 mx-auto mt-8 space-y-4" onSubmit={handleSubmit}>
         <TextField
           autoComplete="given-name"
@@ -107,11 +118,6 @@ function Signup() {
           Create Account
         </Button>
       </form>
-      {showError && (
-        <Alert className="w-1/3 mx-auto mt-8" severity="error" variant="filled">
-          Email address already in use
-        </Alert>
-      )}
     </div>
   );
 }
