@@ -14,7 +14,6 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import "../../styles/main.css";
 import axios from "axios";
-import { CheckCircleOutline } from "@mui/icons-material";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
