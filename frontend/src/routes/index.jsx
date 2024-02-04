@@ -1,13 +1,13 @@
+import { useSelector } from "react-redux";
+
 function Index() {
+  const user = useSelector((state) => state.user);
   return (
     <>
       <div className="flex justify-between">
         <div>
-          <h1 className="text-5xl font-bold">Welcome Aadi</h1>
+          <h1 className="text-5xl font-bold">Welcome {user.username}</h1>
           <p className="mt-1">What are we learning today?</p>
-        </div>
-        <div className="">
-          <a href="/signup/">Sign Up</a>
         </div>
       </div>
 
