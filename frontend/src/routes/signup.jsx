@@ -11,12 +11,17 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { setUser } from "../redux/userSlice";
 import axios from "axios";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -41,7 +46,11 @@ function Signup() {
       })
       .then((res) => {
         if (res.status === 201) {
-          window.location.href = "/";
+          const { user, token } = res.data;
+
+          localStorage.setItem("token", token);
+          dispatch(setUser(user));
+          navigate("/");
         }
       })
       .catch((e) => {
