@@ -12,7 +12,6 @@ const App = () => {
       <CssBaseline />
       <div className="m-16">
         <Routes>
-          <Route path="login/" element={<Login />} />
           <Route
             path="/"
             element={
@@ -21,6 +20,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
+          <Route path="login/" element={<Login />} />
           <Route path="signup/" element={<Signup />} />
         </Routes>
       </div>
