@@ -2,7 +2,8 @@ const Chapter = require("../models/Chapter");
 
 const ChapterController = {
   createChapter: async (req, res) => {
-    const { title, userId } = req.query;
+    const { userId } = req;
+    const { title } = req.query;
 
     try {
       const newChapter = await Chapter.create({
@@ -16,7 +17,7 @@ const ChapterController = {
     }
   },
   getAllUserChapter: async (req, res) => {
-    const userId = parseInt(req.params.userId, 10);
+    const { userId } = req;
     try {
       const allChapters = await Chapter.findAll({ where: { user_id: userId } });
       return res.status(200).json({ allChapters });

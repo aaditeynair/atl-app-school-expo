@@ -2,12 +2,13 @@ const Session = require("../models/Session");
 
 const SessionController = {
   createSession: async (req, res) => {
-    const { title, userid } = req.query;
+    const { userId } = req;
+    const { title } = req.query;
 
     try {
       const newSession = await Session.create({
         title,
-        user_id: userid,
+        user_id: userId,
       });
       res.status(201).json(newSession);
     } catch (err) {

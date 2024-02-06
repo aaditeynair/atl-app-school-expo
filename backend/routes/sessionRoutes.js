@@ -2,8 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 const SessionController = require("../controllers/sessionController");
+const { verifyToken } = require("../middleware/authMiddleware");
 
-router.post("/sessions", (req, res) => {
+router.post("/sessions", verifyToken, (req, res) => {
   SessionController.createSession(req, res);
 });
 

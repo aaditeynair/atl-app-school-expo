@@ -2,7 +2,7 @@ import { AddRounded } from "@mui/icons-material";
 import { Button, Modal, TextField } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import axios from "../config/axiosConfig";
 
 function Index() {
   const user = useSelector((state) => state.user.user);
