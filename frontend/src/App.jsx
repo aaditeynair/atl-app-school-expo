@@ -4,7 +4,7 @@ import Signup from "./routes/signup";
 import Login from "./routes/login";
 import PrivateRoute from "./components/PrivateRoute";
 import { CssBaseline } from "@mui/material";
-import "./styles/main.css";
+import "./main.css";
 
 const App = () => {
   return (
