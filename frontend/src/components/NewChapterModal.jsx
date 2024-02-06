@@ -5,6 +5,9 @@ import axios from "../config/axiosConfig";
 
 const NewChapterModal = () => {
   const [newChapterModal, setNewChapterModal] = useState(false);
+  const handleClose = () => {
+    setNewChapterModal(false);
+  };
   return (
     <div>
       <Button
@@ -22,9 +25,7 @@ const NewChapterModal = () => {
       </Button>
       <Modal
         open={newChapterModal}
-        onClose={() => {
-          setNewChapterModal(false);
-        }}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -42,8 +43,8 @@ const NewChapterModal = () => {
                     title: chapterName,
                   },
                 })
-                .then((res) => {
-                  console.log(res);
+                .then(() => {
+                  handleClose();
                 })
                 .catch((e) => {
                   console.log(e);
