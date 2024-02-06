@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import NewChapterModal from "../components/NewChapterModal";
+import ChapterList from "../components/ChapterList";
 
 function Index() {
   const user = useSelector((state) => state.user.user);
@@ -19,6 +20,7 @@ function Index() {
         <div className="my-2">
           <NewChapterModal />
         </div>
+        <ChapterList />
       </div>
     </>
   );
