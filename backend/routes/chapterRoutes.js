@@ -12,4 +12,8 @@ router.get("/chapters/", verifyToken, (req, res) => {
   ChapterController.getAllUserChapter(req, res);
 });
 
+router.delete("/chapters/:id", verifyToken, (req, res) => {
+  ChapterController.deleteChapterById(req, res);
+});
+
 module.exports = router;
