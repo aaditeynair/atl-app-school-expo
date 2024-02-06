@@ -16,9 +16,11 @@ function Index() {
       </div>
 
       <div className="mt-6">
-        <h1 className="text-2xl font-bold">Chapters</h1>
-        <div className="my-2">
-          <NewChapterModal />
+        <div className="flex justify-between">
+          <h1 className="text-2xl font-bold">Chapters</h1>
+          <div>
+            <NewChapterModal />
+          </div>
         </div>
         <ChapterList />
       </div>
