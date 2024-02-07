@@ -7,7 +7,6 @@ import {
   InputAdornment,
   IconButton,
   Button,
-  Alert,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -15,10 +14,15 @@ import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { setUser } from "../redux/userSlice";
 import axios from "axios";
+import SnackbarMessage from "../components/SnackbarMessage";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [snackbarInfo, setSnackbarInfo] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,6 +30,23 @@ function Signup() {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+  };
+
+  const handleShowSnackbar = (message, severity) => {
+    setSnackbarInfo({
+      open: true,
+      message,
+      severity,
+    });
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarInfo((info) => {
+      return { ...info, open: false };
+    });
   };
 
   const handleSubmit = (e) => {
@@ -61,18 +82,19 @@ function Signup() {
       })
       .catch((e) => {
         if (e.response.data.error === "Email already in use") {
-          setError("Email account already in use");
+          handleShowSnackbar("Email account already in use", "error");
         }
       });
   };
   return (
     <div className="mt-24 text-center">
       <h1 className="font-bold text-5xl">Sign Up</h1>
-      {error && (
-        <Alert className="w-1/3 mx-auto mt-8" severity="error" variant="filled">
-          {error}
-        </Alert>
-      )}
+      <SnackbarMessage
+        open={snackbarInfo.open}
+        message={snackbarInfo.message}
+        severity={snackbarInfo.severity}
+        handleClose={handleSnackbarClose}
+      />
       <form className="w-1/3 mx-auto mt-8 space-y-4" onSubmit={handleSubmit}>
         <TextField
           autoComplete="given-name"

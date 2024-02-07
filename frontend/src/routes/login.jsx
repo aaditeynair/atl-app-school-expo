@@ -7,7 +7,6 @@ import {
   InputAdornment,
   IconButton,
   Button,
-  Alert,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -15,10 +14,15 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { setUser } from "../redux/userSlice";
+import SnackbarMessage from "../components/SnackbarMessage";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [snackbarInfo, setSnackbarInfo] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,6 +30,23 @@ function Login() {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+  };
+
+  const handleShowSnackbar = (message, severity) => {
+    setSnackbarInfo({
+      open: true,
+      message,
+      severity,
+    });
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarInfo((info) => {
+      return { ...info, open: false };
+    });
   };
 
   const handleSubmit = (e) => {
@@ -37,7 +58,7 @@ function Login() {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address");
+      handleShowSnackbar("Please enter a valid email address", "error");
       return;
     }
 
@@ -57,11 +78,17 @@ function Login() {
       })
       .catch((e) => {
         if (e.response.data.error === "Wrong Email") {
-          setError("The email you entered does not belong to any account");
+          handleShowSnackbar(
+            "The email you entered does not belong to any account",
+            "error",
+          );
         } else if (e.response.data.error === "Wrong Password") {
-          setError("Email and password don't match");
+          handleShowSnackbar("Email and password don't match", "error");
         } else {
-          setError("Something went wrong! Please try again later");
+          handleShowSnackbar(
+            "Something went wrong! Please try again later",
+            "error",
+          );
         }
       });
   };
@@ -69,15 +96,12 @@ function Login() {
     <>
       <div className="m-12 mt-24 text-center">
         <h1 className="font-bold text-5xl">Login</h1>
-        {error && (
-          <Alert
-            className="w-1/3 mx-auto mt-8"
-            severity="error"
-            variant="filled"
-          >
-            {error}
-          </Alert>
-        )}
+        <SnackbarMessage
+          open={snackbarInfo.open}
+          message={snackbarInfo.message}
+          severity={snackbarInfo.severity}
+          handleClose={handleSnackbarClose}
+        />
         <form className="w-1/3 mx-auto mt-8 space-y-4" onSubmit={handleSubmit}>
           <TextField
             autoComplete="email"
