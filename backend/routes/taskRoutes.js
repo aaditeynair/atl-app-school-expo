@@ -12,4 +12,8 @@ router.get("/tasks/:id", verifyToken, (req, res) => {
   TaskController.getTask(req, res);
 });
 
+router.put("/tasks/:id", verifyToken, (req, res) => {
+  TaskController.updateTask(req, res);
+});
+
 module.exports = router;

@@ -1,15 +1,18 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "../config/axiosConfig";
 import { useEffect, useState } from "react";
 import SnackbarMessage from "../components/SnackbarMessage";
-import { Checkbox } from "@mui/material";
+import { Button, Checkbox, MenuItem, Select } from "@mui/material";
 import CountdownTimer from "../components/CountdownTimer";
 
 const Session = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [sessionDetails, setSessionDetails] = useState({});
   const [chapters, setChapters] = useState({});
   const [currentTask, setCurrentTask] = useState(null);
+
   const [snackbarInfo, setSnackbarInfo] = useState({
     open: false,
     message: "",
@@ -46,7 +49,11 @@ const Session = () => {
                   .get(`http://localhost:3000/api/tasks/${task.task_id}`)
                   .then((res) => {
                     const { task: taskInfo, chapter: chapterInfo } = res.data;
-                    const task = { ...taskInfo, title: chapterInfo.title };
+                    const task = {
+                      ...taskInfo,
+                      title: chapterInfo.title,
+                      confidence_rating: chapterInfo.confidence_rating,
+                    };
                     const id = task.task_id;
                     setChapters((chapters) => {
                       let newChapters = { ...chapters };
@@ -96,7 +103,6 @@ const Session = () => {
             <h2 className="text-xl font-bold mb-2">Chapters</h2>
             {Object.keys(chapters).map((key) => {
               const chapter = chapters[key];
-              console.log(chapter.completed);
               return (
                 <div key={chapter.task_id}>
                   <div className="flex justify-between w-1/2">
@@ -110,27 +116,77 @@ const Session = () => {
                       </div>
                       <p className="self-center">{chapter.title}</p>
                     </div>
-                    <Checkbox
-                      onClick={(e) => {
-                        setChapters((chap) => {
-                          let newChapters = { ...chap };
-                          newChapters[key].completed = e.target.checked;
-                          return newChapters;
-                        });
-                        if (
-                          currentTask &&
-                          currentTask.task_id === chapter.task_id
-                        ) {
-                          if (e.target.checked) {
-                            setCurrentTask(null);
+                    <div>
+                      <Select
+                        onChange={(e) => {
+                          setChapters((chap) => {
+                            let newChapters = { ...chap };
+                            newChapters[key].confidence_rating = e.target.value;
+                            return newChapters;
+                          });
+                        }}
+                        size="small"
+                        value={chapters[key].confidence_rating}
+                      >
+                        <MenuItem value="good">Good</MenuItem>
+                        <MenuItem value="average">Average</MenuItem>
+                        <MenuItem value="bad">Bad</MenuItem>
+                      </Select>
+                      <Checkbox
+                        value={chapters[key].completed}
+                        onClick={(e) => {
+                          setChapters((chap) => {
+                            let newChapters = { ...chap };
+                            newChapters[key].completed = e.target.checked;
+                            return newChapters;
+                          });
+                          if (
+                            currentTask &&
+                            currentTask.task_id === chapter.task_id
+                          ) {
+                            if (e.target.checked) {
+                              setCurrentTask(null);
+                            }
                           }
-                        }
-                      }}
-                    />
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               );
             })}
+          </div>
+          <div className="mt-6 space-x-4">
+            <Button
+              variant="contained"
+              onClick={(e) => {
+                e.preventDefault();
+                Object.keys(chapters).map((key) => {
+                  const task = chapters[key];
+                  const id = task.task_id;
+                  const date = new Date();
+                  axios
+                    .put(`http://localhost:3000/api/tasks/${id}`, null, {
+                      params: {
+                        completed: task.completed,
+                        confidenceRating: task.confidence_rating,
+                        date,
+                      },
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      handleShowSnackbar(
+                        "Something went wrong! Please try again later",
+                        "error",
+                      );
+                    });
+                });
+                navigate("/");
+              }}
+            >
+              Complete Session
+            </Button>
+            <Button variant="outlined">Delete Session</Button>
           </div>
         </div>
       )}
