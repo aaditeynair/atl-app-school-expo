@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
-import NewChapterModal from "../components/NewChapterModal";
-import ChapterList from "../components/ChapterList";
+import ChapterSection from "../sections/ChapterSection";
 
 function Index() {
   const user = useSelector((state) => state.user.user);
@@ -15,15 +14,7 @@ function Index() {
         </div>
       </div>
 
-      <div className="mt-6">
-        <div className="flex justify-between">
-          <h1 className="text-2xl font-bold">Chapters</h1>
-          <div>
-            <NewChapterModal />
-          </div>
-        </div>
-        <ChapterList />
-      </div>
+      <ChapterSection />
     </>
   );
 }

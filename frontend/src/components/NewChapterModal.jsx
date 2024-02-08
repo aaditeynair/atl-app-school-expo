@@ -1,46 +1,17 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { AddRounded } from "@mui/icons-material";
 import { Button, Modal, TextField } from "@mui/material";
 import axios from "../config/axiosConfig";
-import SnackbarMessage from "./SnackbarMessage";
 
-const NewChapterModal = () => {
+const NewChapterModal = ({ handleShowSnackbar, setChapters }) => {
   const [newChapterModal, setNewChapterModal] = useState(false);
-  const [snackbarInfo, setSnackbarInfo] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
-
   const handleClose = () => {
     setNewChapterModal(false);
   };
 
-  const handleShowSnackbar = (message, severity) => {
-    setSnackbarInfo({
-      open: true,
-      message,
-      severity,
-    });
-  };
-
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setSnackbarInfo((info) => {
-      return { ...info, open: false };
-    });
-  };
-
   return (
     <div>
-      <SnackbarMessage
-        open={snackbarInfo.open}
-        message={snackbarInfo.message}
-        severity={snackbarInfo.severity}
-        handleClose={handleSnackbarClose}
-      />
       <Button
         variant="contained"
         disableElevation
@@ -74,8 +45,9 @@ const NewChapterModal = () => {
                     title: chapterName,
                   },
                 })
-                .then(() => {
+                .then((res) => {
                   handleClose();
+                  setChapters((chap) => [...chap, res.data]);
                   handleShowSnackbar("Chapter added successfully", "success");
                 })
                 .catch((e) => {

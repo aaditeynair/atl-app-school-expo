@@ -1,59 +1,11 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
 import axios from "../config/axiosConfig";
 import { IconButton } from "@mui/material";
 import { DeleteOutlineRounded } from "@mui/icons-material";
-import SnackbarMessage from "./SnackbarMessage";
 
-const ChapterList = () => {
-  const [chapters, setChapters] = useState([]);
-  const [snackbarInfo, setSnackbarInfo] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
-
-  const handleShowSnackbar = (message, severity) => {
-    setSnackbarInfo({
-      open: true,
-      message,
-      severity,
-    });
-  };
-
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setSnackbarInfo((info) => {
-      return { ...info, open: false };
-    });
-  };
-
-  useEffect(() => {
-    const getChapters = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/api/chapters/");
-        const allChapters = response.data.allChapters;
-        setChapters(allChapters);
-      } catch (err) {
-        console.log(err);
-        handleShowSnackbar(
-          "Something went wrong! Please reload the page",
-          "error",
-        );
-      }
-    };
-    getChapters();
-  }, []);
+const ChapterList = ({ handleShowSnackbar, chapters, setChapters }) => {
   return (
     <>
-      <SnackbarMessage
-        open={snackbarInfo.open}
-        message={snackbarInfo.message}
-        severity={snackbarInfo.severity}
-        handleClose={handleSnackbarClose}
-      />
-
       <ul className="mt-6 space-y-2 max-h-[50%]">
         {chapters.map((chapter) => {
           const id = chapter.chapter_id;
