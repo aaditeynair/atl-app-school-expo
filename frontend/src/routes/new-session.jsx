@@ -69,13 +69,47 @@ const NewSession = () => {
         className="flex justify-between"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log("hi");
+          const sessionName = new FormData(e.currentTarget).get("sessionName");
+
+          axios
+            .post("http://localhost:3000/api/sessions", null, {
+              params: {
+                title: sessionName,
+              },
+            })
+            .then((res) => {
+              const sessionId = res.data.session_id;
+              selectedChapters.map((chapter) => {
+                const newTask = {
+                  chapterId: chapter.chapter_id,
+                  timeEstimate: chapter.timeEstimate,
+                  sessionId,
+                };
+                axios
+                  .post("http://localhost:3000/api/tasks", null, {
+                    params: newTask,
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    handleShowSnackbar(
+                      "Something went wrong! Please try again later",
+                    );
+                  });
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+              handleShowSnackbar(
+                "Something went wrong! Please try again later",
+              );
+            });
         }}
       >
         <Input
           fullWidth
           autoFocus
           placeholder="Session Name"
+          name="sessionName"
           sx={{
             fontSize: "2rem",
             maxWidth: "50%",
