@@ -1,6 +1,6 @@
 import NewChapterModal from "../components/NewChapterModal";
 import axios from "../config/axiosConfig";
-import ChapterList from "../components/ChapterList";
+import ChapterListItem from "../components/ChapterListItem";
 import { useState, useEffect } from "react";
 import SnackbarMessage from "../components/SnackbarMessage";
 
@@ -57,11 +57,21 @@ const ChapterSection = () => {
         </div>
       </div>
       {chapters.length > 0 ? (
-        <ChapterList
-          chapters={chapters}
-          setChapters={setChapters}
-          handleShowSnackbar={handleShowSnackbar}
-        />
+        <ul className="mt-6 space-y-0.5 max-h-[50%]">
+          {chapters.map((chapter) => {
+            return (
+              <li key={chapter.chapter_id}>
+                <ChapterListItem
+                  current={chapter}
+                  chapters={chapters}
+                  setChapters={setChapters}
+                  handleShowSnackbar={handleShowSnackbar}
+                  deleteChapter
+                />
+              </li>
+            );
+          })}
+        </ul>
       ) : (
         <p className="mt-8 italic text-center text-gray-500">
           No Chapters Made

@@ -8,15 +8,17 @@ const SessionsSection = () => {
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold">Previous Sessions</h1>
         <div>
-          <Button
-            variant="contained"
-            disableElevation
-            size="small"
-            color="primary"
-            startIcon={<AddRounded />}
-          >
-            <Link to="/new-session">New Session</Link>
-          </Button>
+          <Link to="/new-session">
+            <Button
+              variant="contained"
+              disableElevation
+              size="small"
+              color="primary"
+              startIcon={<AddRounded />}
+            >
+              New Session
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
