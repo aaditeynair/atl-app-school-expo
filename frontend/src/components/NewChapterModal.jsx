@@ -16,7 +16,7 @@ const NewChapterModal = ({ handleShowSnackbar, setChapters }) => {
         variant="contained"
         disableElevation
         size="small"
-        color="warning"
+        color="primary"
         startIcon={<AddRounded />}
         onClick={(e) => {
           e.preventDefault();
@@ -66,7 +66,7 @@ const NewChapterModal = ({ handleShowSnackbar, setChapters }) => {
               label="Chapter Name"
               autoFocus
             />
-            <Button type="submit" color="secondary" variant="outlined">
+            <Button type="submit" color="primary" variant="contained">
               Add Chapter
             </Button>
           </form>

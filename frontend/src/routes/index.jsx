@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import ChapterSection from "../sections/ChapterSection";
+import SessionsSection from "../sections/SessionsSection";
 
 function Index() {
   const user = useSelector((state) => state.user.user);
@@ -15,6 +16,7 @@ function Index() {
       </div>
 
       <ChapterSection />
+      <SessionsSection />
     </>
   );
 }

@@ -136,7 +136,7 @@ function Signup() {
         <Link to="/login" className="text-right text-blue-600 block pb-4">
           Already have an account? Login
         </Link>
-        <Button type="submit" variant="outlined">
+        <Button type="submit" variant="contained">
           Create Account
         </Button>
       </form>
