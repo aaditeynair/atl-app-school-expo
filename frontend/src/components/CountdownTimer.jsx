@@ -42,9 +42,7 @@ const CountdownTimer = ({ currentTask, setCurrentTask, chapter }) => {
           if (currentTask === null) {
             setCurrentTask(chapter);
             setIsRunning(true);
-          }
-
-          if (currentTask.task_id === chapter.task_id) {
+          } else if (currentTask.task_id === chapter.task_id) {
             setIsRunning(!isRunning);
           }
         }}

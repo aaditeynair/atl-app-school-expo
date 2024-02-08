@@ -133,7 +133,7 @@ const Session = () => {
                         <MenuItem value="bad">Bad</MenuItem>
                       </Select>
                       <Checkbox
-                        value={chapters[key].completed}
+                        checked={chapters[key].completed}
                         onClick={(e) => {
                           setChapters((chap) => {
                             let newChapters = { ...chap };

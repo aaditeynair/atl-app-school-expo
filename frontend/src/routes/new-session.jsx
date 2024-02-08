@@ -14,12 +14,15 @@ import axios from "../config/axiosConfig";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 import ChapterListItem from "../components/ChapterListItem";
 import { CloseRounded } from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
 
 const filter = createFilterOptions();
 
 const NewSession = () => {
   const [chapters, setChapters] = useState([]);
   const [selectedChapters, setSelectedChapters] = useState([]);
+
+  const navigate = useNavigate();
 
   const [fieldValue, setFieldValue] = useState(null);
   const [timeEstimate, setTimeEstimate] = useState(0);
@@ -96,6 +99,7 @@ const NewSession = () => {
                     );
                   });
               });
+              navigate(`/session/${res.data.session_id}`);
             })
             .catch((err) => {
               console.log(err);
@@ -116,7 +120,9 @@ const NewSession = () => {
           }}
         />
         <div className="space-x-6 self-center">
-          <Button variant="filled">Cancel</Button>
+          <Link to="/">
+            <Button variant="filled">Cancel</Button>
+          </Link>
           <Button type="submit" variant="contained">
             Start Session
           </Button>
