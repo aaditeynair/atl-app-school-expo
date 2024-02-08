@@ -12,4 +12,8 @@ router.get("/sessions", verifyToken, (req, res) => {
   SessionController.getUserSessions(req, res);
 });
 
+router.get("/sessions/:id", verifyToken, (req, res) => {
+  SessionController.getSession(req, res);
+});
+
 module.exports = router;

@@ -6,6 +6,7 @@ import Index from "./routes/index";
 import Signup from "./routes/signup";
 import Login from "./routes/login";
 import NewSession from "./routes/new-session";
+import Session from "./routes/session";
 import "./main.css";
 
 const App = () => {
@@ -29,6 +30,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <NewSession />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/session/:id"
+            element={
+              <PrivateRoute>
+                <Session />
               </PrivateRoute>
             }
           />

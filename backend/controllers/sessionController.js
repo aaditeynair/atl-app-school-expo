@@ -30,6 +30,31 @@ const SessionController = {
       return res.status(500).json({ error: "Internal Server Error" });
     }
   },
+  getSession: async (req, res) => {
+    const { userId } = req;
+    const { id } = req.params;
+
+    try {
+      const session = await Session.findOne({
+        where: { session_id: id },
+        include: "tasks",
+      });
+      if (session === null) {
+        return res.status(404).json({ error: "Session doesn't exist" });
+      }
+
+      if (session.user_id !== userId) {
+        return res
+          .status(401)
+          .json({ error: "Session doesn't belong to user" });
+      }
+
+      return res.status(200).json({ session });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
 };
 
 module.exports = SessionController;

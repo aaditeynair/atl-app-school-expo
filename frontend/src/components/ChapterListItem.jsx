@@ -13,7 +13,7 @@ const ChapterListItem = ({
   const id = current.chapter_id;
   const date = new Date(current.last_revised_date).toLocaleDateString("en-GB");
   return (
-    <div className="rounded-lg flex-grow flex items-center justify-between hover:bg-gray-200 px-2 py-1">
+    <div className="rounded-lg flex-grow flex items-center justify-between px-2 py-1">
       {current.title}
       <div className="inline-flex space-x-4">
         <p className="bg-orange-300 self-center py-0.5 px-2 text-sm rounded-lg">

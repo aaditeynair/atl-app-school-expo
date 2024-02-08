@@ -18,7 +18,6 @@ const SessionsSection = () => {
     };
     getSessions();
   }, []);
-  console.log(sessions);
   return (
     <div className="mt-8">
       <div className="flex justify-between">
@@ -48,9 +47,11 @@ const SessionsSection = () => {
                   <p className="text-sm text-gray-700 mt-1">Date: {date}</p>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" color="secondary" variant="filled">
-                    See Details
-                  </Button>
+                  <Link to={`/session/${session.session_id}`}>
+                    <Button size="small" color="secondary" variant="filled">
+                      See Details
+                    </Button>
+                  </Link>
                 </CardActions>
               </Card>
             );

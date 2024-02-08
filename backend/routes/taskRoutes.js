@@ -8,4 +8,8 @@ router.post("/tasks", verifyToken, (req, res) => {
   TaskController.createTask(req, res);
 });
 
+router.get("/tasks/:id", verifyToken, (req, res) => {
+  TaskController.getTask(req, res);
+});
+
 module.exports = router;
