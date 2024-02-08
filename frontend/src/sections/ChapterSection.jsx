@@ -56,11 +56,17 @@ const ChapterSection = () => {
           />
         </div>
       </div>
-      <ChapterList
-        chapters={chapters}
-        setChapters={setChapters}
-        handleShowSnackbar={handleShowSnackbar}
-      />
+      {chapters.length > 0 ? (
+        <ChapterList
+          chapters={chapters}
+          setChapters={setChapters}
+          handleShowSnackbar={handleShowSnackbar}
+        />
+      ) : (
+        <p className="mt-8 italic text-center text-gray-500">
+          No Chapters Made
+        </p>
+      )}
       <SnackbarMessage
         open={snackbarInfo.open}
         message={snackbarInfo.message}
