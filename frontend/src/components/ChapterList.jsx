@@ -6,7 +6,7 @@ import { DeleteOutlineRounded } from "@mui/icons-material";
 const ChapterList = ({ handleShowSnackbar, chapters, setChapters }) => {
   return (
     <>
-      <ul className="mt-6 space-y-2 max-h-[50%]">
+      <ul className="mt-6 space-y-0.5 max-h-[50%]">
         {chapters.map((chapter) => {
           const id = chapter.chapter_id;
           const date = new Date(chapter.last_revised_date).toLocaleDateString(
@@ -19,7 +19,7 @@ const ChapterList = ({ handleShowSnackbar, chapters, setChapters }) => {
             >
               {chapter.title}
               <div className="inline-flex space-x-4">
-                <p className="bg-orange-300 py-0.5 px-2 text-sm rounded-lg">
+                <p className="bg-orange-300 self-center py-0.5 px-2 text-sm rounded-lg">
                   {chapter.confidence_rating}
                 </p>
                 <p className="inline-flex self-center text-sm">{date}</p>
