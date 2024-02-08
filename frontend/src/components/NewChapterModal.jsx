@@ -4,7 +4,7 @@ import { AddRounded } from "@mui/icons-material";
 import { Button, Modal, TextField } from "@mui/material";
 import axios from "../config/axiosConfig";
 
-const NewChapterModal = ({ handleShowSnackbar, setChapters }) => {
+const NewChapterModal = ({ handleShowSnackbar, setChapters, value }) => {
   const [newChapterModal, setNewChapterModal] = useState(false);
   const handleClose = () => {
     setNewChapterModal(false);
@@ -13,7 +13,7 @@ const NewChapterModal = ({ handleShowSnackbar, setChapters }) => {
   return (
     <div>
       <Button
-        variant="contained"
+        variant="outlined"
         disableElevation
         size="small"
         color="primary"
@@ -28,8 +28,8 @@ const NewChapterModal = ({ handleShowSnackbar, setChapters }) => {
       <Modal
         open={newChapterModal}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="new-chapter-modal"
+        aria-describedby="Pop-up modal to enter the name of the new chapter"
       >
         <div className="absolute rounded-lg top-1/2 left-1/2 bg-white outline-0 p-8 -translate-x-1/2 -translate-y-1/2">
           <form
@@ -65,6 +65,7 @@ const NewChapterModal = ({ handleShowSnackbar, setChapters }) => {
               name="chapterName"
               label="Chapter Name"
               autoFocus
+              defaultValue={value}
             />
             <Button type="submit" color="primary" variant="contained">
               Add Chapter

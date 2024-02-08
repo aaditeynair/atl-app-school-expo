@@ -15,8 +15,8 @@ function Index() {
         </div>
       </div>
 
-      <ChapterSection />
       <SessionsSection />
+      <ChapterSection />
     </>
   );
 }
