@@ -37,6 +37,7 @@ const ChapterListItem = ({
                   console.log(err);
                   handleShowSnackbar(
                     "Something went wrong! Please try again later.",
+                    "error",
                   );
                 });
             }}

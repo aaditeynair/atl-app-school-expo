@@ -46,7 +46,7 @@ const ChapterSection = () => {
     getChapters();
   }, []);
   return (
-    <div className="mt-6">
+    <div className="mt-8">
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold">Chapters</h1>
         <div>
@@ -57,7 +57,7 @@ const ChapterSection = () => {
         </div>
       </div>
       {chapters.length > 0 ? (
-        <ul className="mt-6 space-y-0.5 max-h-[50%]">
+        <ul className="mt-4 space-y-0.5 max-h-[50%]">
           {chapters.map((chapter) => {
             return (
               <li key={chapter.chapter_id}>
